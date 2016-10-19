@@ -1,0 +1,8 @@
+
+Install à faire :
+
+a)installer node
+b)copier coller les répertoires Testx dans une zone hors git (pour ne pas saturer le dépot avec des modules d'install node JS !!)
+c)se rendre dans le répertoire contenant un fichier tx.js
+d)npm install socket.io
+e)npm install express

@@ -1,0 +1,17 @@
+Tâches backlog produit
+
+Transverse ; conduite de projet
+- faire dépôt git (Fred)
+
+Projet IHM
+- créer user cases IHM (Fama)
+- maquette papier IHM (Fama)
+- questionnaire d'utilisation (Fama)
+
+
+Technique
+- proposer un premier test d'intégration : 1 serveur , 2 clients capables de communiquer une information dans les 2 sens avec Node JS (Fred) 
+- installer sur eclipse le projet NodeJS avec les clients et le serveur projet (Fama+Fred)
+- choix de l'archi + modèle données pour travailler en 2 équipes [Java->Jordan,Arthur] [NodeJS,AngularJS->Fama,Fred] (Fama+Fred)
+
+

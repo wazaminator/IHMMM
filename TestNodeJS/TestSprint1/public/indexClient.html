@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html ng-app="ihmProjet1">
+<head>
+<meta charset="utf-8" />
+
+<title>Projet IHM Sprint 1</title>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"></script>
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="../socket.io/socket.io.js"></script>
+
+<script>
+	var ihmApp = angular.module('ihmProjet1', []);
+</script>
+<script src="main-client-ctrl.js"></script>
+</head>
+<body ng-controller="mainClientCtrl">
+	<h1>Projet IHM - Sprint 1 - test d'intégration NodeJS - Angular JS</h1>
+	<p class="form-group">
+		<label>Nom du client 1 ou 2</label> <input type="text"
+			ng-model="vais.name" class="form-control">
+	</p>
+	<p class="form-group">
+		<label>Position x</label> <input type="text" ng-model="vais.x"
+			class="form-control">
+	</p>
+	<p class="form-group">
+		<label>Position y</label> <input type="text" ng-model="vais.y"
+			class="form-control">
+	</p>
+	<button class="btn" ng-click="inscription()">Inscription à la
+		partie</button>
+	<button class="btn" ng-click="changeSceneClientPosition()">
+		Change Position</button>
+	<div style="position: relative">
+		<h1>Vais:{{vais}}</h1>
+		<h1>debug:{{debug}}</h1>
+	</div>
+	<script>
+    </script>
+</body>
+</html>
