@@ -1,0 +1,29 @@
+
+/*
+.search {
+	 background-color:black;
+}*/
+
+.search ul{
+	display:block;
+	list-style-type:none;
+	margin:0px
+}
+.search ul>li{
+	display:inline-block;
+}
+.search ul>li>figure>a{
+	text-decoration:none;
+}
+
+figure img{
+	border:1px;
+	width:130px;
+	max-width:100%;
+	height:auto;
+	//box-shadow:1 1 30px 10px grey;
+}
+
+figcaption{
+	width:130px;
+}

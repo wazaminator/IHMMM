@@ -1,0 +1,42 @@
+<!--section ng-controller="homeCtrl">
+    <nav>
+        Menu
+        <ul><li>Films</li>
+        <li>Series</li></ul>
+    </nav-->
+				
+    <div ng-controller="homeCtrl">					
+        <h3 class="text-muted">Rechercher un Film / une Serie</h3>
+        <div class="search">
+            <input ng-model="query" type="text" class="txtSearch" placeholder="Titre, Acteur, Realisateur ..." />
+            <button type="submit" ng-click="searchAction()">Rechercher</button>
+            <p><a href="#/search"> Recherche avancée </a></p>
+        </div>
+					
+        <ul class="nav nav-pills pull-right">
+            <li class="active"><a ng-href="#">Meilleurs Ventes</a></li>
+            <li class="active"><a ng-href="#">Suggestions</a></li>
+        </ul>
+					
+        <div>
+            <form action="#" ng-submit="addTodo()">
+                Title : <input type="text" ng-model="remaining" id="title"></br></br>
+            </form>
+                Actors : <input type="text" id="actor" placeholder="Actors" /></br></br>
+                Resume : <input type="text" id="resume" placeholder="resume" />
+                </br></br>
+                <!--{{todos.length}}-->
+                {{message}} {{remaining}}
+					
+					
+                <ul id="todo-list">
+                    <li ng-repeat="todo in todos"> 
+                        <input type="checkbox">	
+                        <label>{{todo.name}}</label>
+                        <button ng-click="removeTodo($index)">X</button>				
+                    </li>
+                </ul>
+        </div>					
+    </div>	
+				
+			<!--/section-->

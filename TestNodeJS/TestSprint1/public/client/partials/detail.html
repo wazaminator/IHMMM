@@ -1,0 +1,20 @@
+
+<div class="detail" ng-controller="detailCtrl">	
+	<div id="poster">
+		<img src="{{details.poster}}" />
+	</div>
+	<div id="info"> 
+		<h2>{{details.title}}</h2>
+		<div id="descriptif">
+			<p><b>Annee production: </b>{{details.year}}  ({{details.runtime}})</p>
+			<p><b>De: </b>{{details.director}}</p>
+			<p><b>Avec: </b>{{details.actors}}</p>
+			<p><b>Genre: </b>{{details.genre}}</p>
+		</div>
+			<h4><u> SYNOPSIS </u></h4>
+		<div id="synopsis">
+			{{details.overview}}
+		</div>
+	</div>
+	
+</div>

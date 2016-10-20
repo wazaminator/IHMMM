@@ -1,0 +1,30 @@
+<h1>home </h1
+				
+    <div ng-controller="homeCtrl">					
+        <h3 class="text-muted">Page de test</h3>
+
+					
+    
+					
+        <div>
+            <form action="#" ng-submit="addTodo()">
+                Votre nom : <input type="text" ng-model="remaining" id="title"></br></br>
+            </form>
+                
+               
+                </br></br>
+                <!--{{todos.length}}-->
+                {{message}} {{remaining}}
+					
+					
+                <ul id="todo-list">
+                    <li ng-repeat="todo in todos"> 
+                        <input type="checkbox">	
+                        <label>{{todo.name}}</label>
+                        <button ng-click="removeTodo($index)">X</button>				
+                    </li>
+                </ul>
+        </div>					
+    </div>	
+				
+			<!--/section-->
