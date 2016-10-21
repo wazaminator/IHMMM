@@ -4,13 +4,10 @@ var http = require('http').Server(app);
 
 app.use(express.static(__dirname + '/public'));
 app.get('/client', function(req,res) {
-  res.sendfile('public/indexClient.html');
-});
-app.get('/clientdesk', function(req,res) {
-  res.sendfile('public/indexClientDesk.html');
+  res.sendfile('public/app-client/index.html');
 });
 app.get('/', function(req,res) {
-  res.sendfile('public/index.html');
+  res.sendfile('public/app-central/index.html');
 });
 
 var io = require('socket.io').listen(http);

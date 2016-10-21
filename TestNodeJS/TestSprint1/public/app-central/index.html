@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html ng-app="ihmProjet1">
+<head>
+<meta charset="utf-8" />
+
+<title>Projet IHM Sprint 1</title>
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../socket.io/socket.io.js"></script>
+
+<script>
+	var ihmApp = angular.module('ihmProjet1', []);
+</script>
+<script src="app-central/modules/game-core/ball-generator.js"></script>
+<script src="app-central/modules/common-display/ctrl/main-central-ctrl.js"></script>
+</head>
+<body ng-controller="mainCentralCtrl">
+	<h1>Projet IHM - Sprint 1 - test d'intégration NodeJS - Angular JS</h1>
+	<h2>Applic centrale</h2>
+	<div style="position: relative">
+		<img style="z-index: 0;width:900px;height:600px;" id="fond1" src="app-central/modules/common-display/img/fond.jpg"
+			alt="Background image" /> 
+			<img ng-repeat="vais in listVais"
+			style="position: absolute; left: {{vais.x}}px;top: {{vais.y}}px; z-index: 1;"
+			id="{{vais.name}}" src="app-central/modules/common-display/img/vais1.jpg"
+			alt="Vaisseau img" />
+			<img ng-repeat="ball in listBalls"
+			style="position: absolute; left: {{ball.x}}px;top: {{ball.y}}px; z-index: 2;"
+			id="{{ball.name}}" src="app-central/modules/common-display/img/icon-obj.png"
+			alt="Vaisseau img" />
+	</div>
+	<div style="position: relative">
+		<h1>listVais:{{listVais}}</h1>
+		<h1>Debug:{{debug}}</h1>
+		<h1>Debug Game:{{debugGame}}</h1>
+</body>
+</html>
