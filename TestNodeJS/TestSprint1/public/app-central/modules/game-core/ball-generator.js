@@ -14,6 +14,7 @@ ihmApp.factory('ballsGenerator', [ '$rootScope', '$interval',
 				vy : 200,
 				r : 26
 			};
+			//list_balls["ball2"]={name:'RRR',x:500,y:27,vx:150,vy:150,r:26};
 
 
 			var moveBalls = function() {

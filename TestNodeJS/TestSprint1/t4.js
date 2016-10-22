@@ -51,7 +51,7 @@ io.sockets.on('connection', function (socket) {
 	
 	socket.on('debutPartieClient', function () {
         console.log('Début de la partie !');
-		socket.broadcast.emit('debutPartieClient', message);  
+		socket.broadcast.emit('debutPartieClient');  
     }); 
 
     socket.on('clientMoveIn', function (message) {

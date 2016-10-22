@@ -73,11 +73,6 @@ ihmApp.controller('mainClientCtrl', [ '$scope','$window', function($scope,$windo
 		$scope.visuMode = 'inscription-partie';
 		$scope.$apply();
 	});
-	
-	socket.on('clientMoveOut', function(message) {
-		$scope.debug = "Mouvement joueur reçu" + message;
-		$scope.$apply();
-	});
 
 	socket.on('message', function(message) {
 		$scope.debug = 'Le serveur a un message pour vous : ' + message;
