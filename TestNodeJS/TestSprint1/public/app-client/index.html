@@ -1,6 +1,9 @@
-<!DOCTYPE html>
-<html>
-    <head>
+﻿<!DOCTYPE html>
+<html ng-app="ihmProjet1">
+<head>
+<meta charset="utf-8" />
+
+<title>Projet IHM Sprint 1</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="utf-8">
 		<link rel="stylesheet" type="text/css" href="styles/index.css" />
@@ -12,70 +15,37 @@
 		<script src="../bower_components/angular-cookies/angular-cookies.js"></script>
 		<script src="../bower_components/angular-messages/angular-messages.js"></script>
 		<script src="../bower_components/angular-resource/angular-resource.js"></script>
-		<script src="../bower_components/angular-route/angular-route.js"></script>
+		<script src="../bower_components/angular-route/angular-route.min.js"></script>
 		<script src="../bower_components/angular-sanitize/angular-sanitize.js"></script>
 		<script src="../bower_components/angular-touch/angular-touch.js"></script>
 			<!-- endbower -->
-		<!--script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js"></script-->
-		<script type="text/javascript" src="configRoute.js"></script>
-		<script type="text/javascript" src="scripts/services/search.js"></script>
-		<script type="text/javascript" src="scripts/controllers/pagesControllers.js"></script>
-        <title> CasseBrique </title>        
-	</head>
-	<body  ng-app="routeApp">
-		<div id="main">
-			<header>
-				<div class="logo">
-                    <img src="images/logos/banniere.png" />
-				</div>				
-			</header>
-			<!--<div class="banniereLogin">
-                <div id="btnLeft">
-                    <ul>
-                        <li>back</li>
-                        <li>Acceuil</li>
-                        <li>Rechercher</li>
-                    </ul>
-                </div>
-                <div id="btnRight">
-                    Connexion/Inscription	Panier
-                </div>
-			</div>	-->	
-			
-			<section id="middle">
-			
-      <!--           <div id="middleLeft">
-                    <nav>
-                        Menu
-                        <ul>
-                           <li>Films</li>
-                            <li>Series</li>
-                        </ul>
-                    </nav>
-                </div> -->
-               <div id="element"> <button  ng-controller="nouvellePartieCtrl"  id="button5"  ng-click="nouvellePartieaction()"> Démarrer une nouvelle partie</button></div>
-			
-				</div>
-				<div id="middleRight">
-                  
-                    
-                    <div id="view" ng-view> 
-					 <button  ng-controller="nouvellePartieCtrl"    ng-click="nouvellePartieaction()"> Démarrer une nouvelle partie</button>
-                    </div>
-                </div>
-				
-			</section>
-			
-			<footer> 
-				<div class="infoFooter">
-					Bas de page
-				</div>
-			</footer> 
-		</div>
-		
-			<!-- bower:js -->
+        
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../socket.io/socket.io.js"></script>
+        <title> CasseBrique </title>
 
-		
-		
-	</body>	
+<script>
+	var ihmApp = angular.module('ihmProjet1', ['dragModule','ngRoute']);
+</script>
+<script>
+	document.write('<base href="' + document.location + '" />');
+</script>
+<script src="app-client/modalites/pad-scale-exact/mydir/imgmovetracker.js"></script>
+<script src="app-client/modalites/pad-scale-exact/ctrl/pad-scale-exact-ctrl.js"></script>
+<script src="app-client/ctrl/main-client-ctrl.js"></script>
+<script src="app-client/ctrl/route-config.js"></script>
+</head>
+<body ng-controller="mainClientCtrl">
+	<h1>Projet IHM</h1>
+	<h4>debug:{{debug}}</h4>
+	<ul>
+	<li><a
+			href="#/pad-scroll">pad-scroll</a></li>
+		<li><a
+			href="#/pad-scale-exact">pad-scale-exact</a></li>
+	</ul>
+	<br>
+	<div ng-include src="'app-client-fred/partials/accueil-page.html'"></div>
+	<div ng-view></div>
+</body>
 </html>

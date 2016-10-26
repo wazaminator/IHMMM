@@ -3,11 +3,11 @@ var app = express();
 var http = require('http').Server(app);
 
 app.use(express.static(__dirname + '/public'));
+app.get('/clientfama', function(req,res) {
+  res.sendfile('public/app-client-fama/index.html');
+});
 app.get('/client', function(req,res) {
   res.sendfile('public/app-client/index.html');
-});
-app.get('/clientfred', function(req,res) {
-  res.sendfile('public/app-client-fred/index.html');
 });
 app.get('/', function(req,res) {
   res.sendfile('public/app-central/index.html');
