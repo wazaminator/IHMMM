@@ -1,5 +1,6 @@
 ihmApp.factory('ballsGenerator', [ '$rootScope', '$interval',
 		function($rootScope, $interval) {
+			var numeroBall=4;
 			var list_balls = {};
 			var field = {
 				width : 900,
@@ -7,37 +8,110 @@ ihmApp.factory('ballsGenerator', [ '$rootScope', '$interval',
 			};
 			var fps = 60;
 			list_balls["ball1"] = {
-				name : 'RRR',
+				name : 'ball1',
 				x : 300,
 				y : 27,
 				vx : 300,
 				vy : 200,
-				r : 26
+				r : 26,
+				t : 1 //1=rebondissante,2=cylindre,3=comette
 			};
-			//list_balls["ball2"]={name:'RRR',x:500,y:27,vx:150,vy:150,r:26};
-
-
+			list_balls["ball2"]={name:'ball2',x:500,y:27,vx:150,vy:-150,r:26,t:2};
+			list_balls["ball3"]={name:'ball3',x:200,y:50,vx:80,vy:120,r:26,t:3};
+			
+			var nouvelEtat = function(){
+				
+			moveBalls();
+			if(false){
+			genBall();	
+			}
+			//TODO colide	
+				
+			}
+			
+			var genBall = function(){
+			list_balls["ball"+numeroBall]={name:"ball"+numeroBall,x:500,y:27,vx:150,vy:50,r:26,t:3};
+			numeroBall++;
+				
+			}
+			
 			var moveBalls = function() {
 				angular.forEach(list_balls, function(ball, key) {
-					moveBall(ball);
+					if(ball.t==1){
+						moveBallrebond(ball);
+					}
+					else if(ball.t==2){
+						moveBallcylindre(ball)
+					}
+					else if(ball.t==3){
+						moveBallcomette(ball);	
+					}
+					
 				});
 			}
 
-			var moveBall = function(ball) {
+			var moveBallrebond = function(ball) {
 				ball.y += ball.vy / fps;
 				if ((ball.y + 2 * ball.r) >= field.height || ball.y <= 0) {
 					ball.vy = -ball.vy;
+					if(ball.y<=0){
+						ball.y=-ball.y
+					}else{
+						ball.y=2*field.height - (ball.y + 4* ball.r);
+					}	
 				}
 				;
 				ball.x += ball.vx / fps;
 				if ((ball.x + 2 * ball.r) >= field.width || ball.x <= 0) {
 					ball.vx = -ball.vx;
+					if(ball.x<=0){
+						ball.x=-ball.x
+					}else{
+						ball.x=2*field.width - (ball.x + 4* ball.r);
+					}
 				}
 				;
 				$rootScope.$broadcast('ballsModified');
 			}
+			;
+			var moveBallcylindre = function(ball) {
+				ball.y += ball.vy / fps;
+				if ((ball.y + 2 * ball.r) >= field.height){
+				ball.y= ball.y+ 2*ball.r - field.height;	
+				} 
+				
+				else if(ball.y <= 0) {
+					ball.y= field.height- (2*ball.r + ball.y);
+				}
+				
+				ball.x += ball.vx / fps;
+				if ((ball.x + 2 * ball.r) >= field.width){
+				ball.x= ball.x+ 2*ball.r - field.width;	
+				} 
+				
+				else if(ball.x <= 0) {
+					ball.x= field.width- (2*ball.r + ball.x);
+				
+				}
 			
-			$interval(moveBalls, 1000 / fps);
+				$rootScope.$broadcast('ballsModified');
+			};
+			
+			var moveBallcomette = function(ball) {
+				if(ball.x>0 && ball.x<field.width && ball.y >0 && ball.y < field.height){
+					ball.y += ball.vy / fps;
+					ball.x += ball.vx / fps;
+				}
+				else{
+					delete list_balls[ball.name];
+				}
+				
+			
+				$rootScope.$broadcast('ballsModified');
+			};
+			
+			$interval(nouvelEtat, 1000 / fps);
+			
 
 			var getListBalls = function() {
 				// $rootScope.$broadcast('debugGame',list_balls);
