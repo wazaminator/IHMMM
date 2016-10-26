@@ -1,7 +1,7 @@
 angular
-		.module('dragModule', [])
+		.module('myPhoneTranslateModule', [])
 		.directive(
-				'myDraggable',
+				'myPhoneTranslate',
 				function($document) {
 					return {
 						restrict : 'EA',

@@ -1,7 +1,7 @@
 angular
-		.module('dragModule', [])
+		.module('myPadScaleExactModule', [])
 		.directive(
-				'myDraggable',
+				'myPadScaleExact',
 				function($document) {
 					return {
 						restrict : 'EA',
