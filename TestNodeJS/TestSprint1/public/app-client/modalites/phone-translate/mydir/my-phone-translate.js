@@ -9,7 +9,7 @@ angular
 						scope : {
 							image : '=drSrc'
 						},
-						template : '<img id="fond1" src="app-client/modalites/pad-scale-exact/img/PadDesktop.jpg" />',
+						template : '<img src="app-client/modalites/phone-translate/img/PadDesktop.jpg" />',
 						link : function(scope, element, attr) {
 							var startX = 0, startY = 0, tracking = 0;
 
