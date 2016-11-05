@@ -1,5 +1,5 @@
-ihmApp.factory('ballsGenerator', [ '$rootScope', '$interval',
-		function($rootScope, $interval) {
+ihmApp.factory('ballsGenerator', [ '$rootScope', 
+		function($rootScope) {
 			var numeroBall=4;
 			var list_balls = {};
 			var field = {

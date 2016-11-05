@@ -12,7 +12,6 @@ ihmApp.controller('mainClientCtrl', [ '$scope','$window', function($scope,$windo
 	$scope.visuMode = 'joueur-id';
 	$scope.maitreJeu = {'name':'kk'};
 	$scope.debug = "None";
-	$scope.debugSock = 'g';
 	
 	$scope.creaJoueurClient = function() {
 		var message = angular.toJson($scope.vais);
@@ -108,11 +107,6 @@ ihmApp.controller('mainClientCtrl', [ '$scope','$window', function($scope,$windo
 
 	socket.on('message', function(message) {
 		$scope.debug = 'Le serveur a un message pour vous : ' + message;
-		$scope.$apply();
-	});
-	
-	socket.on('debug', function(message) {
-		$scope.debugSock = message;
 		$scope.$apply();
 	});
 } ]);

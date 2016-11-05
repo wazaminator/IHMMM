@@ -1,5 +1,5 @@
 ihmApp.factory('gameCoord', [ '$rootScope', '$interval','ballsGenerator',
-		function($rootScope, $interval) {
+		function($rootScope,$interval,ballsGenerator) {
 			var list_players = {};
 			var field = {
 				width : 900,
@@ -8,14 +8,14 @@ ihmApp.factory('gameCoord', [ '$rootScope', '$interval','ballsGenerator',
 			var fps = 60;
 			
 			var nouvelEtat = function(){
-				angular.forEach(list_players, function(player) {
-					newPlayer['points']+=1;
-				});
 				ballsGenerator.moveBalls();
 				if(false){
 				ballsGenerator.genBall();	
 				}
 				//TODO colide				
+				angular.forEach(list_players, function(newPlayer) {
+					newPlayer['points']+=1;
+				});
 			}
 			
 			$interval(nouvelEtat, 1000 / fps);
@@ -33,13 +33,12 @@ ihmApp.factory('gameCoord', [ '$rootScope', '$interval','ballsGenerator',
 			}
 			
 			var movePlayer = function(playerInfo) {
-				list_players[playerInfo.name][x] = playerInfo.x;
-				list_players[playerInfo.name][y] = playerInfo.y;
+				list_players[playerInfo.name].x = playerInfo.x;
+				list_players[playerInfo.name].y = playerInfo.y;
 				return list_players;
 			}
 			
 			var getListPlayers = function() {
-				// $rootScope.$broadcast('debugGame',list_players);
 				return list_players;
 			}
 

@@ -32,6 +32,7 @@
 	socket.on('clientMoveOut', function(message) {
 		var infoClient = angular.fromJson(message);
 		$scope.debug = "Mouvement joueur reçu" + message;
+		$scope.debug = "Mouvement joueur reçu" + infoClient.x;
 		$scope.listPlayers = gameCoord.movePlayer(infoClient);
 		$scope.$apply();
 	});
