@@ -15,43 +15,61 @@ app.get('/', function(req,res) {
 
 var io = require('socket.io').listen(http);
 
-var listeJoueurClient = [];
-var maitreJeu = '';
+var listePlayerClient = [];
+var gameMasterName = '';
+
+var getPlayerToCentral = function(name) {
+	var playerObject = listePlayerClient[name];
+	return JSON.stringify(playerObject);
+}
 
 io.sockets.on('connection', function (socket) {
 
     socket.emit('message', 'Vous êtes bien connecté !');  
 	
-	socket.on('creaJoueurClient', function (nomJoueur) {
-        console.log('Création d\'un joueur : ' + nomJoueur);
-		if (listeJoueurClient.indexOf(nomJoueur) >=0) {
-			console.log(nomJoueur+' existe déjà');
+	socket.on('creaJoueurClient', function (jsonPlayer) {
+		var objectPlayer = JSON.parse(jsonPlayer);
+		var namePlayer = objectPlayer.name;
+        if (typeof listePlayerClient[namePlayer] != 'undefined') {
+			console.log(namePlayer+' existe déjà');
 			socket.emit('creaJoueurClientKo');  
 		} else {
-			listeJoueurClient.push(nomJoueur);
-			console.log(listeJoueurClient);
-			if (maitreJeu == '') {
+			console.log('Création d\'un joueur : ' + namePlayer);
+			listePlayerClient[namePlayer]=objectPlayer;
+			console.log(listePlayerClient);
+			if (gameMasterName == '') {
 				socket.emit('creaJoueurClientOkSansMaitre');  
 			} else {
-				socket.emit('creaJoueurClientOkAvecMaitre',maitreJeu);  
+				socket.emit('creaJoueurClientOkAvecMaitre',gameMasterName);  
 			}
 		}
     });
 	
-	socket.on('creationPartieClient', function (maitreJeuParam) {
-        console.log('Création d\'une partie par : ' + maitreJeuParam);
-		maitreJeu = maitreJeuParam;
-		socket.broadcast.emit('creationPartieClient', maitreJeu);  
+	socket.on('creationPartieClient', function (gameMasterNameParam) {
+        console.log('Création d\'une partie demandée par : ' + gameMasterNameParam);
+		//socket.broadcast.emit('debug', 'u1');  
+		//socket.emit('debug', 'u11');  
+		if (gameMasterName == '') { 
+			gameMasterName = gameMasterNameParam;
+			socket.emit('creationPartieClientOk', gameMasterName); 			
+			socket.broadcast.emit('creationPartieClientOk', gameMasterName); 
+			socket.broadcast.emit('addActivePlayerToCentral', getPlayerToCentral(gameMasterName)); 
+		} else { 
+			socket.emit('creationPartieClientDenied', gameMasterName); 
+		}
     });
 	
-	socket.on('inscriptionPartieClient', function (message) {
-        console.log('Inscription d\'un client : ' + message);
-		socket.broadcast.emit('inscriptionPartieClient', message);  
+	socket.on('inscriptionPartieClient', function (playerName) {
+        console.log('Inscription d\'un client : ' + playerName);
+		socket.emit('inscriptionPartieClientOk', playerName);  
+		socket.broadcast.emit('inscriptionPartieClientOk', playerName);  
+		socket.broadcast.emit('addActivePlayerToCentral', getPlayerToCentral(playerName));  
     }); 
 	
 	socket.on('debutPartieClient', function () {
         console.log('Début de la partie !');
-		socket.broadcast.emit('debutPartieClient');  
+		socket.broadcast.emit('debutPartieClientOk');  
+		socket.emit('debutPartieClientOk');  
     }); 
 
     socket.on('clientMoveIn', function (message) {

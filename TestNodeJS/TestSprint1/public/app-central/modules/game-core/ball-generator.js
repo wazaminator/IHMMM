@@ -19,16 +19,6 @@ ihmApp.factory('ballsGenerator', [ '$rootScope', '$interval',
 			list_balls["ball2"]={name:'ball2',x:500,y:27,vx:150,vy:-150,r:26,t:2};
 			list_balls["ball3"]={name:'ball3',x:200,y:50,vx:80,vy:120,r:26,t:3};
 			
-			var nouvelEtat = function(){
-				
-			moveBalls();
-			if(false){
-			genBall();	
-			}
-			//TODO colide	
-				
-			}
-			
 			var genBall = function(){
 			list_balls["ball"+numeroBall]={name:"ball"+numeroBall,x:500,y:27,vx:150,vy:50,r:26,t:3};
 			numeroBall++;
@@ -48,6 +38,7 @@ ihmApp.factory('ballsGenerator', [ '$rootScope', '$interval',
 					}
 					
 				});
+				$rootScope.$broadcast('ballsModified');
 			}
 
 			var moveBallrebond = function(ball) {
@@ -71,7 +62,6 @@ ihmApp.factory('ballsGenerator', [ '$rootScope', '$interval',
 					}
 				}
 				;
-				$rootScope.$broadcast('ballsModified');
 			}
 			;
 			var moveBallcylindre = function(ball) {
@@ -93,8 +83,6 @@ ihmApp.factory('ballsGenerator', [ '$rootScope', '$interval',
 					ball.x= field.width- (2*ball.r + ball.x);
 				
 				}
-			
-				$rootScope.$broadcast('ballsModified');
 			};
 			
 			var moveBallcomette = function(ball) {
@@ -105,14 +93,8 @@ ihmApp.factory('ballsGenerator', [ '$rootScope', '$interval',
 				else{
 					delete list_balls[ball.name];
 				}
-				
-			
-				$rootScope.$broadcast('ballsModified');
 			};
 			
-			$interval(nouvelEtat, 1000 / fps);
-			
-
 			var getListBalls = function() {
 				// $rootScope.$broadcast('debugGame',list_balls);
 				return list_balls;
@@ -124,6 +106,8 @@ ihmApp.factory('ballsGenerator', [ '$rootScope', '$interval',
 
 			return {
 				getListBalls : getListBalls,
+				moveBalls : moveBalls,
+				genBall : genBall,
 				isColliding : isColliding
 			};
 		} ]);

@@ -1,6 +1,6 @@
-﻿ihmApp.controller('mainCentralCtrl', [ '$scope','ballsGenerator', function($scope,ballsGenerator) {	
+﻿ihmApp.controller('mainCentralCtrl', [ '$scope','gameCoord','ballsGenerator', function($scope,gameCoord,ballsGenerator) {	
 	var socket = io.connect();
-	$scope.listVais = {};
+	$scope.listPlayers = gameCoord.getListPlayers();
 	$scope.listBalls = ballsGenerator.getListBalls();
 	
 	$scope.debug = "None";
@@ -15,17 +15,24 @@
 		$scope.debugGame = "Recu : "+message;
 	});
 	
-	socket.on('inscriptionPartieClient', function(message) {
-		var infoClient = angular.fromJson(message);
-		$scope.debug = "inscription joueur reçu" + message;
-		$scope.listVais[infoClient.name] = infoClient;
+	socket.on('addActivePlayerToCentral', function(playerJson) {
+		$scope.debug = "inscription joueur reçu !!";
+		$scope.debug = "inscription joueur reçu !! :"+playerJson;
+		var playerObj = angular.fromJson(playerJson);
+		$scope.debug = "inscription joueur reçu" + playerObj.name;
+		$scope.listPlayers = gameCoord.addPlayer(playerObj);
 		$scope.$apply();
 	});
+	
+	socket.on('debutPartieClient', function () {
+        ballsGenerator.startGame();  
+		$scope.$apply();
+    }); 
 
 	socket.on('clientMoveOut', function(message) {
 		var infoClient = angular.fromJson(message);
 		$scope.debug = "Mouvement joueur reçu" + message;
-		$scope.listVais[infoClient.name] = infoClient;
+		$scope.listPlayers = gameCoord.movePlayer(infoClient);
 		$scope.$apply();
 	});
 
