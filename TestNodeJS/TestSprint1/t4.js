@@ -76,6 +76,16 @@ io.sockets.on('connection', function (socket) {
         console.log('Un client bouge : ' + message);
 		socket.broadcast.emit('clientMoveOut', message);  
     }); 
+	
+	socket.on('powerWonByClient', function (userName) {
+        console.log('powerWonByClient par '+userName);
+		socket.broadcast.emit('powerWonByClient',userName);  
+    }); 
+	
+	socket.on('usePowerByClient', function (userName) {
+        console.log('usePowerByClient par '+userName);
+		socket.broadcast.emit('usePowerByClient',userName);  
+    }); 
 });
 
 http.listen(8082);

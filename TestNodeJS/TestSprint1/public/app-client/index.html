@@ -4,41 +4,45 @@
 <meta charset="utf-8" />
 
 <title>Projet IHM Sprint 1</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta charset="utf-8">
-		<link rel="stylesheet" type="text/css" href="styles/index.css" />
-		<link rel="stylesheet" type="text/css" href="styles/search.css" />
-		<link rel="stylesheet" type="text/css" href="styles/detail.css" />
-				<script src="../bower_components/angular/angular.js"></script>
-		<script src="../bower_components/angular-animate/angular-animate.js"></script>
-		<script src="../bower_components/angular-aria/angular-aria.js"></script>
-		<script src="../bower_components/angular-cookies/angular-cookies.js"></script>
-		<script src="../bower_components/angular-messages/angular-messages.js"></script>
-		<script src="../bower_components/angular-resource/angular-resource.js"></script>
-		<script src="../bower_components/angular-route/angular-route.min.js"></script>
-		<script src="../bower_components/angular-sanitize/angular-sanitize.js"></script>
-		<script src="../bower_components/angular-touch/angular-touch.js"></script>
-			<!-- endbower -->
-        
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css"
+	href="../bower_components/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="styles/index.css" />
+<link rel="stylesheet" type="text/css" href="styles/search.css" />
+<link rel="stylesheet" type="text/css" href="styles/detail.css" />
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../bower_components/angular-animate/angular-animate.js"></script>
+<script src="../bower_components/angular-aria/angular-aria.js"></script>
+<script src="../bower_components/angular-cookies/angular-cookies.js"></script>
+<script src="../bower_components/angular-messages/angular-messages.js"></script>
+<script src="../bower_components/angular-resource/angular-resource.js"></script>
+<script src="../bower_components/angular-route/angular-route.min.js"></script>
+<script src="../bower_components/angular-sanitize/angular-sanitize.js"></script>
+<script src="../bower_components/angular-touch/angular-touch.js"></script>
 <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- endbower -->
 <script src="../socket.io/socket.io.js"></script>
-        <title> CasseBrique </title>
+<title>CasseBrique</title>
 
-
-		
 <script>
 	var ihmApp = angular.module('ihmProjet1', ['myPadScaleExactModule','myPadScrollModule','myPhoneTranslateModule','ngRoute']);
 </script>
 <script>
 	document.write('<base href="' + document.location + '" />');
 </script>
-<script src="app-client/modalites/pad-scale-exact/mydir/my-pad-scale-exact.js"></script>
+<script
+	src="app-client/modalites/pad-scale-exact/mydir/my-pad-scale-exact.js"></script>
 <script src="app-client/modalites/pad-scroll/mydir/my-pad-scroll.js"></script>
-<script src="app-client/modalites/phone-translate/mydir/my-phone-translate.js"></script>
+<script
+	src="app-client/modalites/phone-translate/mydir/my-phone-translate.js"></script>
 
-<script src="app-client/modalites/pad-scale-exact/ctrl/pad-scale-exact-ctrl.js"></script>
+<script
+	src="app-client/modalites/pad-scale-exact/ctrl/pad-scale-exact-ctrl.js"></script>
 <script src="app-client/modalites/pad-scroll/ctrl/pad-scroll-ctrl.js"></script>
-<script src="app-client/modalites/phone-translate/ctrl/phone-translate-ctrl.js"></script>
+<script
+	src="app-client/modalites/phone-translate/ctrl/phone-translate-ctrl.js"></script>
 
 <script src="app-client/ctrl/main-client-ctrl.js"></script>
 <script src="app-client/ctrl/route-config.js"></script>
@@ -48,12 +52,9 @@
 	<h1>Projet IHM</h1>
 	<h4>debug:{{debug}}</h4>
 	<ul>
-	<li><a
-			href="#/pad-scroll">Pad scroll</a></li>
-		<li><a
-			href="#/pad-scale-exact">Pad échelle exacte</a></li>
-		<li><a
-			href="#/phone-translate">Avec déplacement du téléphone</a></li>
+		<li><a href="#/pad-scroll">Pad scroll</a></li>
+		<li><a href="#/pad-scale-exact">Pad échelle exacte</a></li>
+		<li><a href="#/phone-translate">Avec déplacement du téléphone</a></li>
 	</ul>
 	<br>
 	<div ng-include src="'app-client/partials/accueil-page.html'"></div>

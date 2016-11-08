@@ -14,10 +14,12 @@ ihmApp.factory('ballsGenerator', [ '$rootScope',
 				vx : 300,
 				vy : 200,
 				r : 26,
-				t : 1 //1=rebondissante,2=cylindre,3=comette
+				t : 1, //1=rebondissante,2=cylindre,3=comette
+				c : '#FFFFFF',//main color
+				ct : '#000000'//outside color 
 			};
-			list_balls["ball2"]={name:'ball2',x:500,y:27,vx:150,vy:-150,r:26,t:2};
-			list_balls["ball3"]={name:'ball3',x:200,y:50,vx:80,vy:120,r:26,t:3};
+			list_balls["ball2"]={name:'ball2',x:500,y:27,vx:150,vy:-150,r:26,t:2,c:'#FF0000',ct:'#00FFFF'};
+			list_balls["ball3"]={name:'ball3',x:200,y:50,vx:80,vy:120,r:26,t:3,c:'#FFFF00',ct:'#0000FF'};
 			
 			var genBall = function(){
 			list_balls["ball"+numeroBall]={name:"ball"+numeroBall,x:500,y:27,vx:150,vy:50,r:26,t:3};

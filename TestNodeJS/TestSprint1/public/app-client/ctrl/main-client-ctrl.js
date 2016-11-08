@@ -5,6 +5,9 @@ ihmApp.controller('mainClientCtrl', [ '$scope','$window', function($scope,$windo
 		name : '',
 		x : 400,
 		y : 500,
+		l : 100,//size 10 <= l <= 100
+		p : 2,//power counter
+		pt : 1,//life points
 		intcolor : '#FF0000',
 		extcolor : '#000000'
 	};
@@ -33,6 +36,15 @@ ihmApp.controller('mainClientCtrl', [ '$scope','$window', function($scope,$windo
 	$scope.declenchePartie = function() {
 		socket.emit('debutPartieClient');
 		$scope.visuMode = 'partie-en-cours';
+	}
+	
+	$scope.usePower = function() {
+		socket.emit('usePowerByClient', $scope.vais.name);
+		$scope.vais.p -= 1;
+	}
+	
+	$scope.hasPower = function() {
+		return ($scope.vais.p > 0);
 	}
 	
 	$scope.$watch('vais', function() {
@@ -92,8 +104,7 @@ ihmApp.controller('mainClientCtrl', [ '$scope','$window', function($scope,$windo
 		$scope.debug = "Inscription Partie Client reçue :"+playerName;
 		if (playerName == $scope.vais.name) {
 			$scope.debug = "inscription joueur confirmé " + playerName;
-			$scope.visuMode = 'salon-attente'
-			$scope.startedGame = true;
+			$scope.vais.pt += 1;
 		}
 		$scope.$apply();
 	});
@@ -103,6 +114,15 @@ ihmApp.controller('mainClientCtrl', [ '$scope','$window', function($scope,$windo
 			$scope.visuMode = 'partie-en-cours';
 			$scope.$apply();
 		}
+	});
+	
+	socket.on('powerWonByClient', function(playerName) {
+		$scope.debug = "powerWonByClient reçu :"+playerName;
+		if (playerName == $scope.vais.name) {
+			$scope.debug = "powerWonByClient reçu confirmé " + playerName;
+			$scope.vais.p += 1;
+		}
+		$scope.$apply();
 	});
 
 	socket.on('message', function(message) {

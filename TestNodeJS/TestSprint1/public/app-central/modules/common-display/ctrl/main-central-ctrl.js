@@ -16,10 +16,10 @@
 	});
 	
 	socket.on('addActivePlayerToCentral', function(playerJson) {
-		$scope.debug = "inscription joueur reçu !!";
-		$scope.debug = "inscription joueur reçu !! :"+playerJson;
+		$scope.debugGame = "inscription joueur reçu !!";
+		$scope.debugGame = "inscription joueur reçu !! :"+playerJson;
 		var playerObj = angular.fromJson(playerJson);
-		$scope.debug = "inscription joueur reçu" + playerObj.name;
+		$scope.debugGame = "inscription joueur reçu" + playerObj.name;
 		$scope.listPlayers = gameCoord.addPlayer(playerObj);
 		$scope.$apply();
 	});
@@ -31,14 +31,22 @@
 
 	socket.on('clientMoveOut', function(message) {
 		var infoClient = angular.fromJson(message);
-		$scope.debug = "Mouvement joueur reçu" + message;
-		$scope.debug = "Mouvement joueur reçu" + infoClient.x;
+		$scope.debug = "Mouvement joueur reçu " + message;
 		$scope.listPlayers = gameCoord.movePlayer(infoClient);
 		$scope.$apply();
 	});
 
 	socket.on('message', function(message) {
-		$scope.debug = 'Le serveur a un message pour vous : ' + message;
+		$scope.debugGame = 'Le serveur a un message pour vous : ' + message;
 		$scope.$apply();
+	});
+	
+	socket.on('usePowerByClient', function(playerName) {
+		$scope.debugGame = "usePowerByClient " + playerName;
+		$scope.$apply();
+	});
+	
+	$scope.$on('givePowerToPlayer', function(event,playerName) {
+		socket.emit('powerWonByClient',playerName);
 	});
 } ]);

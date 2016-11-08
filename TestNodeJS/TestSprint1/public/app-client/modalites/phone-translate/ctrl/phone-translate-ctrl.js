@@ -1,3 +1,3 @@
-ihmApp.controller('PhoneTranslateCtrl', [ '$scope', function($scope) {	
+ihmApp.controller('PhoneTranslateCtrl', [ '$scope','$window', function($scope,$window) {	
 	
 } ]);

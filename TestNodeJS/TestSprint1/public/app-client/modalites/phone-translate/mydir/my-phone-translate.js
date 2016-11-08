@@ -2,64 +2,66 @@ angular
 		.module('myPhoneTranslateModule', [])
 		.directive(
 				'myPhoneTranslate',
-				function($document) {
+				function($document,$window) {
 					return {
 						restrict : 'EA',
 						replace : true,
 						scope : {
 							image : '=drSrc'
 						},
-						template : '<img src="app-client/modalites/phone-translate/img/PadDesktop.jpg" />',
+						template : '<div>x:{{image.x}} // y:{{image.y}} // l:{{image.l}} </div>',
 						link : function(scope, element, attr) {
-							var startX = 0, startY = 0, tracking = 0;
-
-							element.on('mousedown', function(event) {
-								// Prevent default dragging of selected content
-								event.preventDefault();
-								if (tracking == 0) {
-									$document.on('mousemove', mousemove);
-									$document.on('mouseup', mouseup);
-									startX = event.pageX;
-									startY = event.pageY;
-									tracking = 1;
+							var startX = 0, startY = 0, startL = 0, trackingMotion = 0, trackingRotation = 0; 							
+							function processMotion(event) {
+								var tmpx = event.accelerationIncludingGravity.x;
+								var tmpy = event.accelerationIncludingGravity.y;
+								if (trackingMotion == 0) {
+									//To initialise startX and startY at start 
+									trackingMotion = 1;
 								} else {
-									tracking = 0;
-									$document.unbind('mousemove', mousemove);
-									$document.unbind('mouseup', mouseup);
+									var deltax = tmpx - startX;
+									if ((deltax > 0.2) || (deltax < -0.2))
+									scope.$apply(function() {
+										if (deltax > 0) {
+											scope.image.x = scope.image.x + 10;
+										} else {
+											scope.image.x = scope.image.x - 10;
+										}
+									});
+									var deltay = tmpy - startY;
+									if ((deltay > 0.3) || (deltay < -0.3))
+									scope.$apply(function() {
+										if (deltay > 0) {
+											scope.image.y = scope.image.y + 10;
+										} else {
+											scope.image.y = scope.image.y - 10;
+										}
+									});
 								}
-							});
-
-							function mousemove(event) {
+								startX = tmpx;
+								startY = tmpy;
+							}
+							function processRotation(event) {
+								var tmpl = event.beta;
+								if (trackingRotation == 0) {
+									//To initialise startX and startY at start 
+									trackingRotation = 1;
+								} else {
+									scope.$apply(function() {
+										scope.image.l = scope.image.l + (tmpl - startL);
+									});
+								}
+								startL = tmpl;
+							}
+							if (($window.DeviceOrientationEvent)&&($window.DeviceMotionEvent)) {
+								$window.addEventListener("deviceorientation", processRotation, false);
+								$window.addEventListener("devicemotion", processMotion, false);
+							} else {
 								scope.$apply(function() {
-									scope.image.x = scope.image.x + (event.pageX - startX);
-									scope.image.y = scope.image.y + event.pageY - startY;
+									scope.image.x = 100;
+									scope.image.y = 200;
+									scope.image.l = 300;
 								});
-								startX = event.pageX;
-								startY = event.pageY;
-							}
-
-							function mouseup() {
-								
-							}
-							
-							//https://www.sitepoint.com/html5-javascript-mouse-wheel/
-							if (element.addEventListener) {
-								// IE9, Chrome, Safari, Opera
-								element.addEventListener("mousewheel", MouseWheelHandler, false);
-								// Firefox
-								element.addEventListener("DOMMouseScroll", MouseWheelHandler, false);
-							}
-							// IE 6/7/8
-							else 
-								element.attachEvent("onmousewheel", MouseWheelHandler);
-							
-							function MouseWheelHandler(e) {
-								// cross-browser wheel delta
-								var e = window.event || e; // old IE support
-								var delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
-								element.style.width = Math.max(50, Math.min(800, element.width + (30 * delta))) + "px";
-
-								return false;
 							}
 						}
 

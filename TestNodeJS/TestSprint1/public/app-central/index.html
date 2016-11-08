@@ -26,10 +26,10 @@
 	<div style="position: absolute; top: 0px; left: 0px;">
 		<svg width="900" height="600">
 				<circle ng-repeat="ball in listBalls" cx="{{ball.x}}"
-				cy="{{ball.y}}" r="{{ball.r}}" stroke="green" stroke-width="4"
-				fill="yellow" />
+				cy="{{ball.y}}" r="{{ball.r}}" stroke="{{ball.ct}}" stroke-width="4"
+				fill="{{ball.c}}" />
 				<rect ng-repeat="player in listPlayers" x="{{player.x}}"
-				y="{{player.y}}" width="{{player.varlength}}" height="10" stroke="{{player.extcolor}}"
+				y="{{player.y}}" width="{{player.l}}" height="10" stroke="{{player.extcolor}}"
 				stroke-width="3" fill="{{player.intcolor}}" />
 			</svg>
 	</div>
@@ -37,7 +37,7 @@
 	<div class="row">
 		<div ng-repeat="player in listPlayers" 
 			style="border-style:solid;border-width:2px;border-color:{{player.extcolor}};background-color:{{player.intcolor}}" 
-			class="col-xs-3 col-sm-2">{{player.name}} : {{player.points}}</div>
+			class="col-xs-3 col-sm-2">{{player.name}} : {{player.pt}}</div>
 	</div>
 
 	<h1>listPlayers:{{listPlayers}}</h1>

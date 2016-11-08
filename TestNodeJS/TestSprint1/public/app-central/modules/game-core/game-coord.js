@@ -13,8 +13,9 @@ ihmApp.factory('gameCoord', [ '$rootScope', '$interval','ballsGenerator',
 				ballsGenerator.genBall();	
 				}
 				//TODO colide				
-				angular.forEach(list_players, function(newPlayer) {
-					newPlayer['points']+=1;
+				angular.forEach(list_players, function(player) {
+					player['points']+=1;
+					//$rootScope.$broadcast('givePowerToPlayer', player.name); //Syntaxe donnation pouvoir
 				});
 			}
 			
@@ -26,8 +27,6 @@ ihmApp.factory('gameCoord', [ '$rootScope', '$interval','ballsGenerator',
 			}
 			
 			var addPlayer = function(newPlayer) {
-				newPlayer['points']=0;
-				newPlayer['varlength']=100;
 				list_players[newPlayer.name] = newPlayer;
 				return list_players;
 			}
