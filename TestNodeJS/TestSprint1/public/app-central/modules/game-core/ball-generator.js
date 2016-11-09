@@ -22,18 +22,41 @@ ihmApp.factory('ballsGenerator', [ '$rootScope',
 			list_balls["ball3"]={name:'ball3',x:200,y:50,vx:80,vy:120,r:26,t:3,c:'#FFFF00',ct:'#0000FF'};
 			
 			var genBall = function(){
-			list_balls["ball"+numeroBall]={name:"ball"+numeroBall,x:500,y:27,vx:150,vy:50,r:26,t:3};
+				list_balls["ball"+numeroBall]={name:"ball"+numeroBall,x:500,y:27,vx:150,vy:50,r:26,t:3,c:'#FF0000',ct:'#00FFFF'};
 			numeroBall++;
 				
 			}
 			
+			var colliding = function(player) {
+				//todo
+				angular.forEach(list_balls, function(ball, key) {
+					
+					//Ca touche mauvais
+					if (false) {
+						$rootScope.$broadcast('playerDamaged',player.name);
+					}
+					//Ca touche pouvoir 1 ou n
+					if (false) {
+						//Syntaxe donnation pouvoir
+						var powerAwarded = new Object();
+						powerAwarded['name']=player.name;
+						powerAwarded['type']=1;
+						var message = angular.toJson(powerAwarded);
+						$rootScope.$broadcast('givePowerToPlayer',message);
+					}
+				});
+			}
+			
 			var moveBalls = function() {
+				if(false){
+					ballsGenerator.genBall();	
+				}
 				angular.forEach(list_balls, function(ball, key) {
 					if(ball.t==1){
 						moveBallrebond(ball);
 					}
 					else if(ball.t==2){
-						moveBallcylindre(ball)
+						moveBallcylindre(ball);
 					}
 					else if(ball.t==3){
 						moveBallcomette(ball);	
@@ -102,14 +125,9 @@ ihmApp.factory('ballsGenerator', [ '$rootScope',
 				return list_balls;
 			}
 
-			var isColliding = function(vais) {
-				return false;
-			}
-
 			return {
 				getListBalls : getListBalls,
 				moveBalls : moveBalls,
-				genBall : genBall,
-				isColliding : isColliding
+				colliding : colliding
 			};
 		} ]);

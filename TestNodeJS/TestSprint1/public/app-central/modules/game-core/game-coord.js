@@ -9,22 +9,17 @@ ihmApp.factory('gameCoord', [ '$rootScope', '$interval','ballsGenerator',
 			
 			var nouvelEtat = function(){
 				ballsGenerator.moveBalls();
-				if(false){
-				ballsGenerator.genBall();	
-				}
+				angular.forEach(list_players, function(player, key) {
+					ballsGenerator.colliding(player);
+				});
 				//TODO colide				
 				angular.forEach(list_players, function(player) {
 					player['points']+=1;
-					//$rootScope.$broadcast('givePowerToPlayer', player.name); //Syntaxe donnation pouvoir
 				});
 			}
 			
 			$interval(nouvelEtat, 1000 / fps);
 			
-
-			var isColliding = function(vais) {
-				return false;
-			}
 			
 			var addPlayer = function(newPlayer) {
 				list_players[newPlayer.name] = newPlayer;
