@@ -14,53 +14,34 @@ angular
 							var startX = 0, startY = 0, tracking = 0;
 
 							element.on('mousedown', function(event) {
+								$document.on('mouseup', mouseup);
 								// Prevent default dragging of selected content
 								event.preventDefault();
-								if (tracking == 0) {
-									$document.on('mousemove', mousemove);
-									$document.on('mouseup', mouseup);
-									startX = event.pageX;
-									startY = event.pageY;
-									tracking = 1;
-								} else {
-									tracking = 0;
-									$document.unbind('mousemove', mousemove);
-									$document.unbind('mouseup', mouseup);
-								}
-							});
-
-							function mousemove(event) {
-								scope.$apply(function() {
-									scope.image.x = scope.image.x + (event.pageX - startX);
-									scope.image.y = scope.image.y + event.pageY - startY;
-								});
+								tracking = 1;
 								startX = event.pageX;
 								startY = event.pageY;
-							}
-
+							});
+							
+							element.on('mousemove', function(event) {
+								// Prevent default dragging of selected content
+								event.preventDefault();
+								if (tracking == 1) {
+									scope.$apply(function() {
+										scope.image.x = scope.image.x + (event.pageX - startX);
+										scope.image.y = scope.image.y + event.pageY - startY;
+									});
+									startX = event.pageX;
+									startY = event.pageY;
+								}
+							});
+							
 							function mouseup() {
+								tracking = 0;
+							}
+							
+							$document.on('mouseup', function(event) {
 								
-							}
-							
-							//https://www.sitepoint.com/html5-javascript-mouse-wheel/
-							if (element.addEventListener) {
-								// IE9, Chrome, Safari, Opera
-								element.addEventListener("mousewheel", MouseWheelHandler, false);
-								// Firefox
-								element.addEventListener("DOMMouseScroll", MouseWheelHandler, false);
-							}
-							// IE 6/7/8
-							else 
-								element.attachEvent("onmousewheel", MouseWheelHandler);
-							
-							function MouseWheelHandler(e) {
-								// cross-browser wheel delta
-								var e = window.event || e; // old IE support
-								var delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
-								element.style.width = Math.max(50, Math.min(800, element.width + (30 * delta))) + "px";
-
-								return false;
-							}
+							});
 						}
 
 					}

@@ -8,6 +8,11 @@ ihmApp.factory('gameCoord', [ '$rootScope', '$interval','ballsGenerator',
 			var fps = 60;
 			
 			var nouvelEtat = function(){
+				var powerAwarded = new Object();
+						powerAwarded['name']="oo";
+						powerAwarded['type']=1;
+						var message = angular.toJson(powerAwarded);
+						$rootScope.$broadcast('givePowerToPlayer',message);
 				ballsGenerator.moveBalls();
 				angular.forEach(list_players, function(player, key) {
 					ballsGenerator.colliding(player);
