@@ -77,9 +77,10 @@ io.sockets.on('connection', function (socket) {
 		socket.broadcast.emit('clientMoveOut', message);  
     }); 
 	
-	socket.on('powerWonByClient', function (userName) {
-        console.log('powerWonByClient par '+userName);
-		socket.broadcast.emit('powerWonByClient',userName);  
+	socket.on('powerWonByClient', function (message) {
+		var powerWon = JSON.parse(message);
+        console.log('powerWonByClient '+powerWon.name+' of type '+powerWon.type);
+		socket.broadcast.emit('powerWonByClient',message);  
     }); 
 	
 	socket.on('usePowerByClient', function (userName) {

@@ -6,7 +6,7 @@ ihmApp.controller('mainClientCtrl', [ '$scope','$window', function($scope,$windo
 		x : 400,
 		y : 500,
 		l : 100,//size 10 <= l <= 100
-		p : 2,//power counter
+		p : [],//power list
 		pt : 1,//life points
 		intcolor : '#FF0000',
 		extcolor : '#000000'
@@ -116,13 +116,18 @@ ihmApp.controller('mainClientCtrl', [ '$scope','$window', function($scope,$windo
 		}
 	});
 	
-	socket.on('powerWonByClient', function(playerName) {
-		$scope.debug = "powerWonByClient reçu :"+playerName;
-		if (playerName == $scope.vais.name) {
-			$scope.debug = "powerWonByClient reçu confirmé " + playerName;
-			$scope.vais.p += 1;
-		}
+	socket.on('powerWonByClient', function(message) {
+		var powerWon = angular.fromJson(message);
+		$scope.debug = 'powerWonByClient '+powerWon.name+' of type '+powerWon.type;
+		if (powerWon.name == $scope.vais.name) {
+			$scope.debug = "powerWonByClient reçu confirmé " + powerWon.name+" of type "+powerWon.type;
+			if (powerWon.type == 3) { //Point of life awarded
+				$scope.vais.pt += 50;
+			} else {
+				$scope.vais.p.push(powerWon.type);
+			}
 		$scope.$apply();
+		}
 	});
 
 	socket.on('message', function(message) {

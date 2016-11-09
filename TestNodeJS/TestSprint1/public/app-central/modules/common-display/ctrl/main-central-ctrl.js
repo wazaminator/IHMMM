@@ -46,7 +46,7 @@
 		$scope.$apply();
 	});
 	
-	$scope.$on('givePowerToPlayer', function(event,playerName) {
-		socket.emit('powerWonByClient',playerName);
+	$scope.$on('givePowerToPlayer', function(event,message) {
+		socket.emit('powerWonByClient',message);
 	});
 } ]);
