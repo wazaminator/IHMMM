@@ -25,7 +25,7 @@
 		alt="Background image" />
 	<div style="position: absolute; top: 0px; left: 0px;">
 		<svg width="900" height="600">
-				<circle ng-repeat="ball in listBalls" cx="{{ball.x}}"
+				<circle ng-repeat="ball in listBalls" ng-show="isPartieGoingOn" cx="{{ball.x}}"
 				cy="{{ball.y}}" r="{{ball.r}}" stroke="{{ball.ct}}" stroke-width="4"
 				fill="{{ball.c}}" />
 				<rect ng-repeat="player in listPlayers" x="{{player.x}}"
@@ -41,7 +41,7 @@
 	</div>
 
 	<h1>listPlayers:{{listPlayers}}</h1>
-	<h1>Debug:{{debug}}</h1>
+	<h1>Debug:{{$scope.listPlayers}}</h1>
 	<h1>Debug Game:{{debugGame}}</h1>
 </body>
 </html>

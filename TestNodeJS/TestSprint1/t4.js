@@ -83,10 +83,20 @@ io.sockets.on('connection', function (socket) {
 		socket.broadcast.emit('powerWonByClient',message);  
     }); 
 	
+	socket.on('playerDamaged', function (playerName) {
+		console.log('playerDamaged '+playerName);
+		socket.broadcast.emit('playerDamaged',playerName);  
+    }); 
+	
 	socket.on('usePowerByClient', function (userName) {
         console.log('usePowerByClient par '+userName);
 		socket.broadcast.emit('usePowerByClient',userName);  
     }); 
+	
+	socket.on('endOfTheGame', function () {
+        console.log('endOfTheGame recu ');
+		socket.broadcast.emit('endOfTheGame',gameMasterName);  
+    });
 });
 
 http.listen(8082);

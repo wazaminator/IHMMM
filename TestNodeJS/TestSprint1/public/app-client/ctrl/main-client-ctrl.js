@@ -28,7 +28,6 @@ ihmApp.controller('mainClientCtrl', [ '$scope','$window', function($scope,$windo
 	}
 	
 	$scope.inscription = function() {
-		//var message = angular.toJson($scope.vais, false);
 		socket.emit('inscriptionPartieClient', $scope.vais.name);
 		$scope.visuMode = 'salon-attente';
 	}
@@ -87,7 +86,6 @@ ihmApp.controller('mainClientCtrl', [ '$scope','$window', function($scope,$windo
 	});
 	
 	socket.on('creationPartieClientOk', function(masterName) {
-		$scope.debug = "creation Partie Client reçue";
 		$scope.debug = "creation Partie Client reçue : "+masterName;
 		if (masterName == $scope.vais.name) {
 			$scope.debug = "Inscription maitre jeu confirmée " + masterName;
@@ -104,7 +102,8 @@ ihmApp.controller('mainClientCtrl', [ '$scope','$window', function($scope,$windo
 		$scope.debug = "Inscription Partie Client reçue :"+playerName;
 		if (playerName == $scope.vais.name) {
 			$scope.debug = "inscription joueur confirmé " + playerName;
-			$scope.vais.pt += 1;
+			$scope.visuMode == 'salon-attente';
+			$scope.startedGame = true;
 		}
 		$scope.$apply();
 	});
@@ -129,7 +128,28 @@ ihmApp.controller('mainClientCtrl', [ '$scope','$window', function($scope,$windo
 		$scope.$apply();
 		}
 	});
+	
+	socket.on('endOfTheGame', function(maitreJeu) {
+		if ($scope.vais.name == maitreJeu) {
+			$scope.debug = 'Reinit après end of game';
+			$scope.visuMode = 'declenche-partie';
+		} else {
+			$scope.visuMode = 'salon-attente';
+			$scope.debug = 'declenche-partie après fin';
+		}
+		$scope.startedGame = true;
+		$scope.$apply();
+	});
 
+	socket.on('playerDamaged', function(playerName) {
+		if (playerName == $scope.vais.name) {
+			$scope.debug = "playerDamaged ! ";
+			var audio = new Audio('app-client/sounds/explo.mp3');
+			audio.play();
+			$scope.$apply();
+		}
+	});
+	
 	socket.on('message', function(message) {
 		$scope.debug = 'Le serveur a un message pour vous : ' + message;
 		$scope.$apply();

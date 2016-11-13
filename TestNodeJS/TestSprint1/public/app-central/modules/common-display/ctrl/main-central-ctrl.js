@@ -1,7 +1,8 @@
-﻿ihmApp.controller('mainCentralCtrl', [ '$scope','gameCoord','ballsGenerator', function($scope,gameCoord,ballsGenerator) {	
+﻿ihmApp.controller('mainCentralCtrl', [ '$scope','$window','gameCoord','ballsGenerator', function($scope,$window,gameCoord,ballsGenerator) {	
 	var socket = io.connect();
 	$scope.listPlayers = gameCoord.getListPlayers();
 	$scope.listBalls = ballsGenerator.getListBalls();
+	$scope.isPartieGoingOn = false;
 	
 	$scope.debug = "None";
 	$scope.debugGame = "None";
@@ -24,10 +25,17 @@
 		$scope.$apply();
 	});
 	
-	socket.on('debutPartieClient', function () {
-        ballsGenerator.startGame();  
+	socket.on('debutPartieClientOk', function () {
+        gameCoord.startGame();  
+		$scope.isPartieGoingOn = true;
 		$scope.$apply();
-    }); 
+    });
+	
+	$scope.$on('endOfTheGame', function(event,winner) {
+		$scope.isPartieGoingOn = false;
+		$window.alert("Partie finie !   Remportée par "+winner);
+		socket.emit('endOfTheGame');
+	});
 
 	socket.on('clientMoveOut', function(message) {
 		var infoClient = angular.fromJson(message);
@@ -49,4 +57,11 @@
 	$scope.$on('givePowerToPlayer', function(event,message) {
 		socket.emit('powerWonByClient',message);
 	});
+	
+	$scope.$on('playerDamaged', function(event,playerName) {
+		$scope.listPlayers[playerName].pt -= 10000;
+		socket.emit('playerDamaged',playerName);
+	});
+	
+	
 } ]);

@@ -6,25 +6,47 @@ ihmApp.factory('gameCoord', [ '$rootScope', '$interval','ballsGenerator',
 				height : 600
 			};
 			var fps = 60;
+			var isPartieGoingOn = false;
+			//Total game duration
+			var gamecountdown = 600;
 			
 			var nouvelEtat = function(){
-				var powerAwarded = new Object();
-						powerAwarded['name']="oo";
-						powerAwarded['type']=1;
-						var message = angular.toJson(powerAwarded);
-						$rootScope.$broadcast('givePowerToPlayer',message);
-				ballsGenerator.moveBalls();
-				angular.forEach(list_players, function(player, key) {
-					ballsGenerator.colliding(player);
-				});
-				//TODO colide				
-				angular.forEach(list_players, function(player) {
-					player['points']+=1;
-				});
+				if (isPartieGoingOn) {
+					//Game countdown decreases every 1/60 second
+					gamecountdown -= 1;
+					ballsGenerator.moveBalls();
+					angular.forEach(list_players, function(player, key) {
+						ballsGenerator.colliding(player);
+					});
+					//TODO colide				
+					angular.forEach(list_players, function(player) {
+						player.pt += player.l;
+					});
+					//End game after 2 minutes
+					if (gamecountdown < 1) {
+						isPartieGoingOn = false;
+						var maxpoints = 0;
+						var winner = '';
+						angular.forEach(list_players, function(player, key) {
+							if (player.pt > maxpoints) {
+								maxpoints = player.pt;
+								winner = player.name;
+							}
+						});
+						$rootScope.$broadcast('endOfTheGame',winner);
+					} 
+				}
 			}
 			
 			$interval(nouvelEtat, 1000 / fps);
 			
+			var startGame = function() {
+				gamecountdown = 600;
+				angular.forEach(list_players, function(player, key) {
+					player.pt = 0;
+				});
+				isPartieGoingOn = true;
+			}
 			
 			var addPlayer = function(newPlayer) {
 				list_players[newPlayer.name] = newPlayer;
@@ -44,6 +66,7 @@ ihmApp.factory('gameCoord', [ '$rootScope', '$interval','ballsGenerator',
 			return {
 				getListPlayers : getListPlayers,
 				addPlayer : addPlayer,
-				movePlayer : movePlayer
+				movePlayer : movePlayer,
+				startGame : startGame
 			};
 		} ]);
