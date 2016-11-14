@@ -11,6 +11,9 @@
 <link rel="stylesheet" type="text/css" href="styles/index.css" />
 <link rel="stylesheet" type="text/css" href="styles/search.css" />
 <link rel="stylesheet" type="text/css" href="styles/detail.css" />
+<link rel="stylesheet" href="bower_components/angular-color-picker/dist/angularjs-color-picker.min.css" />
+<!-- only include if you use bootstrap -->
+<link rel="stylesheet" href="bower_components/angular-color-picker/dist/themes/angularjs-color-picker-bootstrap.min.css" />
 <script src="../bower_components/angular/angular.js"></script>
 <script src="../bower_components/angular-animate/angular-animate.js"></script>
 <script src="../bower_components/angular-aria/angular-aria.js"></script>
@@ -22,12 +25,14 @@
 <script src="../bower_components/angular-touch/angular-touch.js"></script>
 <script src="../bower_components/jquery/dist/jquery.min.js"></script>
 <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="../bower_components/tinycolor/dist/tinycolor-min.js"></script>
+<script src="../bower_components/angular-color-picker/dist/angularjs-color-picker.min.js"></script>
 <!-- endbower -->
 <script src="../socket.io/socket.io.js"></script>
 <title>CasseBrique</title>
 
 <script>
-	var ihmApp = angular.module('ihmProjet1', ['myPadScaleExactModule','myPadScrollModule','myPhoneTranslateModule','ngRoute']);
+	var ihmApp = angular.module('ihmProjet1', ['myPadScaleExactModule','myPadScrollModule','myPhoneTranslateModule','ngRoute','color.picker']);
 </script>
 <script>
 	document.write('<base href="' + document.location + '" />');
@@ -46,7 +51,7 @@
 
 <script src="app-client/ctrl/main-client-ctrl.js"></script>
 <script src="app-client/ctrl/route-config.js"></script>
-
+<script src="app-client/ctrl/color-picker.js"></script>
 </head>
 <body ng-controller="mainClientCtrl">
 	<h1>Projet IHM</h1>

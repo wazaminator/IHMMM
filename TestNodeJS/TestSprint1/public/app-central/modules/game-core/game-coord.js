@@ -8,7 +8,7 @@ ihmApp.factory('gameCoord', [ '$rootScope', '$interval','ballsGenerator',
 			var fps = 60;
 			var isPartieGoingOn = false;
 			//Total game duration
-			var gamecountdown = 600;
+			var gamecountdown = 3600;
 			
 			var nouvelEtat = function(){
 				if (isPartieGoingOn) {
@@ -41,7 +41,7 @@ ihmApp.factory('gameCoord', [ '$rootScope', '$interval','ballsGenerator',
 			$interval(nouvelEtat, 1000 / fps);
 			
 			var startGame = function() {
-				gamecountdown = 600;
+				gamecountdown = 3600;
 				angular.forEach(list_players, function(player, key) {
 					player.pt = 0;
 				});

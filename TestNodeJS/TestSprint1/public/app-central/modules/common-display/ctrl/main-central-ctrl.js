@@ -59,7 +59,7 @@
 	});
 	
 	$scope.$on('playerDamaged', function(event,playerName) {
-		$scope.listPlayers[playerName].pt -= 10000;
+		$scope.listPlayers[playerName].pt -= 10000;//A discuter
 		socket.emit('playerDamaged',playerName);
 	});
 	
