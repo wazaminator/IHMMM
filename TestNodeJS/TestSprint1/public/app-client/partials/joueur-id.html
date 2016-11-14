@@ -1,14 +1,14 @@
 <p class="form-group">
-	<label>Nom du joueur</label> <input type="text"
-		ng-model="vais.name" class="form-control">
+	<label>Nom du joueur</label> <input type="text" ng-model="vais.name"
+		class="form-control">
 </p>
 <p class="form-group">
-	<label>Couleur intérieure vaisseau</label> <input type="text"
-		ng-model="vais.intcolor" class="form-control">
+	<label>Couleur intérieure vaisseau</label>
+	<color-picker ng-model="vais.intcolor"></color-picker>
 </p>
 <p class="form-group">
-	<label>Couleur extérieure vaisseau</label> <input type="text"
-		ng-model="vais.extcolor" class="form-control">
+	<label>Couleur extérieure vaisseau</label>
+	<color-picker ng-model="vais.extcolor"></color-picker>
 </p>
-<button class="btn" ng-click="creaJoueurClient()">Création
-	du joueur</button>
+<button class="btn" ng-click="creaJoueurClient()">Création du
+	joueur</button>

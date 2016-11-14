@@ -1,13 +1,18 @@
 <h2>Appli client Desktop - pad - scale exact</h2>
-	<div>
+<div>
 	<my-pad-scale-exact dr-src="vais" />
-	</div>
-	<p class="form-group">
-		<label>Position x</label> <input type="text" ng-model="vais.x"
-			class="form-control">
-	</p>
-	<p class="form-group">
-		<label>Position y</label> <input type="text" ng-model="vais.y"
-			class="form-control">
-	</p>
-			<h1>Vais:{{vais}}</h1>
+</div>
+<p class="form-group" ng-show="hasPower()">
+	<label>Crédit de pouvoirs : {{vais.p}}</label>
+	<button type="button" class="btn btn-primary btn-lg"
+		ng-click="usePower()">Utilisation du pouvoir</button>
+</p>
+<p class="form-group">
+	<label>Position x : {{vais.x}}</label>
+</p>
+<p class="form-group">
+	<label>Position y : {{vais.y}}</label>
+</p>
+<p class="form-group">
+	<label>Size l : {{vais.l}}</label>
+</p>
