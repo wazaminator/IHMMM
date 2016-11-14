@@ -56,6 +56,7 @@ ihmApp.factory('gameCoord', [ '$rootScope', '$interval','ballsGenerator',
 			var movePlayer = function(playerInfo) {
 				list_players[playerInfo.name].x = playerInfo.x;
 				list_players[playerInfo.name].y = playerInfo.y;
+				list_players[playerInfo.name].l = playerInfo.l;
 				return list_players;
 			}
 			
