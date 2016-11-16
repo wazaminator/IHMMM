@@ -5,25 +5,32 @@ ihmApp.factory('gameCoord', [ '$rootScope', '$interval','ballsGenerator',
 				width : 900,
 				height : 600
 			};
-			var fps = 60;
+			var fps = 40;
+			var difficulty = 1; // de 1 a 3
 			var isPartieGoingOn = false;
 			//Total game duration
-			var gamecountdown = 3600;
+			var dureephase = 7;
+			var gamecountdown = dureephase*fps;
 			
 			var nouvelEtat = function(){
 				if (isPartieGoingOn) {
-					//Game countdown decreases every 1/60 second
+					//Game countdown decreases every frame
 					gamecountdown -= 1;
-					ballsGenerator.moveBalls();
+					ballsGenerator.moveBalls(difficulty);
 					angular.forEach(list_players, function(player, key) {
 						ballsGenerator.colliding(player);
 					});
-					//TODO colide				
+					
 					angular.forEach(list_players, function(player) {
 						player.pt += player.l;
 					});
 					//End game after 2 minutes
-					if (gamecountdown < 1) {
+					if(gamecountdown < 1) {
+					gamecountdown = dureephase*fps;
+					difficulty++;
+					}
+					
+					if (difficulty > 8) {
 						isPartieGoingOn = false;
 						var maxpoints = 0;
 						var winner = '';
@@ -41,7 +48,8 @@ ihmApp.factory('gameCoord', [ '$rootScope', '$interval','ballsGenerator',
 			$interval(nouvelEtat, 1000 / fps);
 			
 			var startGame = function() {
-				gamecountdown = 3600;
+				gamecountdown = dureephase*fps;
+				difficulty=1;
 				angular.forEach(list_players, function(player, key) {
 					player.pt = 0;
 				});

@@ -1,13 +1,14 @@
 ihmApp.factory('ballsGenerator', [ '$rootScope', 
 		function($rootScope) {
 			var numeroBall=4;
+			
 			var list_balls = {};
 			var field = {
 				width : 900,
 				height : 600
 			};
-			var fps = 60;
-            list_balls["ball1"] = {
+			var fps = 40;
+  /*          list_balls["ball1"] = {
 				name : 'ball1',
 				x : 300,
 				y : 27,
@@ -18,10 +19,10 @@ ihmApp.factory('ballsGenerator', [ '$rootScope',
 				bonus : 1, //0=ennemis,1= reverse,2=big padle 3 = bonus points
 				c : '#FFFFFF',//main color
 				ct : '#000000'//outside color 
-			};
+			};*/
             
-            list_balls["ball2"]={name:'ball2',x:-26,y:-26,vx:100,vy:100,r:26,t:3,bonus:0,c:'#FF00FF',ct:'#000000'};
-            list_balls["ball3"]={name:'ball3',x:100,y:-26,vx:0,vy:200,r:26,t:3,bonus:0,c:'#FF00FF',ct:'#000000'};
+          /*  list_balls["ball2"]={name:'ball2',x:-26,y:-26,vx:100,vy:100,r:26,t:3,bonus:0,c:'#FF00FF',ct:'#000000'};
+            list_balls["ball3"]={name:'ball3',x:100,y:-26,vx:0,vy:200,r:26,t:3,bonus:0,c:'#FF00FF',ct:'#000000'};*/
 
  //           list_balls["ball2"]={name:'ball2',x:300,y:300,vx:0,vy:-50,r:26,t:1,c:'#000000',ct:'#FFFFFF'};
 //			list_balls["ball2"]={name:'ball2',x:500,y:27,vx:150,vy:-150,r:26,t:2,c:'#FF0000',ct:'#00FFFF'};
@@ -89,10 +90,10 @@ ihmApp.factory('ballsGenerator', [ '$rootScope',
 				});
 			}
 			
-			var moveBalls = function() {
+			var moveBalls = function(difficulty) {
                 var uneChanceSur = 20;
                 var random = Math.floor((Math.random() * uneChanceSur) + 1);
-				if(random ==1){
+				if(random  <= difficulty){
 					genBall();	
 				}
 				angular.forEach(list_balls, function(ball, key) {
