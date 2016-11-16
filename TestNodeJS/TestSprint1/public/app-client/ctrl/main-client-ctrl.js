@@ -28,12 +28,16 @@ ihmApp.controller('mainClientCtrl', [
 			$scope.debug = "None";
 			$scope.clock = 0;
 			$scope.powerType = 0;
+			$scope.inversion = 1;
+			$scope.lengthmax = false;
 			
 			var clockManager = function(){
 				if ($scope.clock > 0) {
 					$scope.clock -= 1;
 				} else {
 					$scope.powerType = 0;
+					$scope.inversion = 1;
+					$scope.lengthmax = false;
 				}
 			};
 			
@@ -61,12 +65,12 @@ ihmApp.controller('mainClientCtrl', [
 			}
 
 			$scope.usePower = function() {
-				socket.emit('usePowerByClient', $scope.vais.name);
-				$scope.vais.p -= 1;
+				var typePouvoir = $scope.vais.p.pop();
+				socket.emit('usePowerByClient', typePouvoir);
 			}
 
 			$scope.hasPower = function() {
-				return ($scope.vais.p > 0);
+				return ($scope.vais.p.length > 0);
 			}
 
 			$scope.$watch('vais', function() {
@@ -106,9 +110,10 @@ ihmApp.controller('mainClientCtrl', [
 				}
 			}
 
-			socket.on('creaJoueurClientKo', function() {
-				$window.alert("Le nom de joueur existe déjà.");
-				$scope.vais.name = '';
+			socket.on('creaJoueurClientKo', function(message) {
+				var vaisSvg = angular.fromJson(message);
+				$window.alert("Le nom de joueur existe déjà, il est restauré.");
+				$scope.vais = vaisSvg;
 				$scope.$apply();
 			});
 
@@ -121,7 +126,11 @@ ihmApp.controller('mainClientCtrl', [
 			socket.on('creaJoueurClientOkAvecMaitre', function(masterName) {
 				$scope.debug = "creaJoueurClient Ok Avec Maitre";
 				$scope.maitreJeu.name = masterName;
-				$scope.visuMode = 'inscription-partie';
+				if ($scope.maitreJeu.name != $scope.vais.name) {
+					$scope.visuMode = 'inscription-partie';
+				} else {
+					$scope.visuMode = 'declenche-partie';
+				}
 				$scope.$apply();
 			});
 
@@ -200,9 +209,16 @@ ihmApp.controller('mainClientCtrl', [
 				}
 			});
 			
-			socket.on('usePowerByClient', function(powerType) {
-				$scope.clock = 20;
-				$scope.powerType = powerType;
+			socket.on('powerUsedByClient', function(powerTypeUsed) {
+				$scope.clock = 6;
+				$scope.powerType = powerTypeUsed;
+				if (powerTypeUsed == '1') {
+					$scope.inversion = -1;
+				}
+				if (powerTypeUsed == '2') {
+					$scope.lengthmax = true;
+					$scope.vais.l = $scope.limits.lMax;
+				}
 				$scope.$apply();
 			});
 
