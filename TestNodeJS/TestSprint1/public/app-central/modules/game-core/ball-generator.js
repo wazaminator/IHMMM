@@ -1,13 +1,13 @@
 ihmApp.factory('ballsGenerator', [ '$rootScope', 
 		function($rootScope) {
-			var numeroBall=4;
+			var numeroBall=1;
 			var list_balls = {};
 			var field = {
 				width : 900,
 				height : 600
 			};
 			var fps = 60;
-            list_balls["ball1"] = {
+ /*           list_balls["ball1"] = {
 				name : 'ball1',
 				x : 300,
 				y : 27,
@@ -22,7 +22,7 @@ ihmApp.factory('ballsGenerator', [ '$rootScope',
             
             list_balls["ball2"]={name:'ball2',x:-26,y:-26,vx:100,vy:100,r:26,t:3,bonus:0,c:'#FF00FF',ct:'#000000'};
             list_balls["ball3"]={name:'ball3',x:100,y:-26,vx:0,vy:200,r:26,t:3,bonus:0,c:'#FF00FF',ct:'#000000'};
-
+*/
  //           list_balls["ball2"]={name:'ball2',x:300,y:300,vx:0,vy:-50,r:26,t:1,c:'#000000',ct:'#FFFFFF'};
 //			list_balls["ball2"]={name:'ball2',x:500,y:27,vx:150,vy:-150,r:26,t:2,c:'#FF0000',ct:'#00FFFF'};
 //			list_balls["ball3"]={name:'ball3',x:200,y:50,vx:80,vy:120,r:26,t:3,c:'#FFFF00',ct:'#0000FF'};
@@ -42,24 +42,44 @@ ihmApp.factory('ballsGenerator', [ '$rootScope',
                 //random y  
                 var yBall=-rBall;
                 
-                //random vx
-                var vxMin = -300;
-                var vxMax = 300;
-                var vxBall = Math.floor((Math.random() * (vxMax-vxMin)) + vxMin);
-
                 //random vy
                 var vyMin = 50;
                 var vyMax = 300;
                 var vyBall = Math.floor((Math.random() * (vyMax-vyMin)) + vyMin);
                 
+                //random vx
+/*                var vxMin = -300;
+                var vxMax = 300;
+                var vxBall = Math.floor((Math.random() * (vxMax-vxMin)) + vxMin);
+ */               
+                var vxMin = -300;
+                var vxMax = 300;
+                var vxBall = Math.floor((Math.random() * (vxMax-vxMin)) + vxMin);
+ 
+ 
+                var enemyChance = 90;
+                var bonusBall=Math.floor((Math.random() * 100) + 1);
+                if(bonusBall>90){
+                    bonusBall=Math.floor((Math.random() * 3) + 1);
+                    
+                }else{
+                    bonusBall=0;
+                }
                 
-                var bonusBall=0;
-                
-                var couleurMin=0;
-                var couleurMax=255;
-                
-                
-				list_balls["ball"+numeroBall]={name:"ball"+numeroBall,x:xBall,y:yBall,vx:vxBall,vy:vyBall,r:rBall,t:3,bonus:bonusBall,c:'#FF0000',ct:'#000000'};
+                if(bonusBall==0){
+                    color='#FF0000';                    
+                }else if(bonusBall==1){
+                    color='#00FF00';       
+                }else if(bonusBall==2){
+                    color='#FFFF00';       
+                }else if(bonusBall==3){
+                    color='#0000FF';       
+                }
+                else{
+                    color='#FFFFFF';       
+                }
+                         
+				list_balls["ball"+numeroBall]={name:"ball"+numeroBall,x:xBall,y:yBall,vx:vxBall,vy:vyBall,r:rBall,t:3,bonus:bonusBall,c:color,ct:'#000000'};
                 numeroBall++;
 				
 			}
@@ -161,6 +181,14 @@ ihmApp.factory('ballsGenerator', [ '$rootScope',
 				else{
 					delete list_balls[ball.name];
 				}
+                /* Balles couleur arc en ciel 
+                var letters = '0123456789ABCDEF';
+                var color = '#';
+                for (var i = 0; i < 6; i++ ) {
+                    color += letters[Math.floor(Math.random() * 16)];
+                }
+                ball.c=color;
+                */
 			};
 			
 			var getListBalls = function() {
