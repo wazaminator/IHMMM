@@ -27,6 +27,12 @@ ihmApp
 										templateUrl : 'app-client/modalites/phone-translate/phone-translate-view.html',
 										controller : 'PhoneTranslateCtrl'
 									})
+							.when(
+									'/move-clavier',
+									{
+										templateUrl : 'app-client/modalites/move-clavier/move-clavier-view.html',
+										controller : 'MoveClavierCtrl'
+									})
 							.otherwise({
 								redirectTo : '/'
 							});

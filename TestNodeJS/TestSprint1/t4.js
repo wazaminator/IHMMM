@@ -88,9 +88,9 @@ io.sockets.on('connection', function (socket) {
 		socket.broadcast.emit('playerDamaged',playerName);  
     }); 
 	
-	socket.on('usePowerByClient', function (userName) {
-        console.log('usePowerByClient par '+userName);
-		socket.broadcast.emit('usePowerByClient',userName);  
+	socket.on('usePowerByClient', function (powerType) {
+        console.log('usePowerByClient de type '+powerType);
+		socket.broadcast.emit('usePowerByClient',powerType);  
     }); 
 	
 	socket.on('endOfTheGame', function () {

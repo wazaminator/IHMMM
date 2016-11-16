@@ -1,7 +1,7 @@
 ihmApp.controller('mainClientCtrl', [
 		'$scope',
-		'$window',
-		function($scope, $window) {
+		'$window','$interval',
+		function($scope,$window,$interval) {
 			var socket = io.connect();
 			$scope.vais = {
 				name : '',
@@ -26,6 +26,18 @@ ihmApp.controller('mainClientCtrl', [
 				'name' : 'kk'
 			};
 			$scope.debug = "None";
+			$scope.clock = 0;
+			$scope.powerType = 0;
+			
+			var clockManager = function(){
+				if ($scope.clock > 0) {
+					$scope.clock -= 1;
+				} else {
+					$scope.powerType = 0;
+				}
+			};
+			
+			$interval(clockManager, 1000);
 
 			$scope.creaJoueurClient = function() {
 				var message = angular.toJson($scope.vais);
@@ -159,7 +171,7 @@ ihmApp.controller('mainClientCtrl', [
 					$scope.debug = "powerWonByClient reçu confirmé "
 							+ powerWon.name + " of type " + powerWon.type;
 					if (powerWon.type == 3) { // Point of life awarded
-						$scope.vais.pt += 50;
+						$scope.vais.pt += 20000;
 					} else {
 						$scope.vais.p.push(powerWon.type);
 					}
@@ -186,6 +198,12 @@ ihmApp.controller('mainClientCtrl', [
 					//audio.play();
 					$scope.$apply();
 				}
+			});
+			
+			socket.on('usePowerByClient', function(powerType) {
+				$scope.clock = 20;
+				$scope.powerType = powerType;
+				$scope.$apply();
 			});
 
 			socket.on('message',

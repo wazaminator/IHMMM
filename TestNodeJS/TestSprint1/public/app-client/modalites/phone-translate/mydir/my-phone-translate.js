@@ -13,36 +13,42 @@ angular
 						link : function(scope, element, attr) {
 							var startX = 0, startY = 0, startL = 0, trackingMotion = 0, trackingRotation = 0; 							
 							function processMotion(event) {
-								var tmpx = event.accelerationIncludingGravity.x;
-								var tmpy = event.accelerationIncludingGravity.y;
+								var tmpx = Math.round(event.accelerationIncludingGravity.x*100);
+								var tmpy = Math.round(event.accelerationIncludingGravity.y*100);
+								var bMaj = false;
 								if (trackingMotion == 0) {
 									//To initialise startX and startY at start 
 									trackingMotion = 1;
 								} else {
 									var deltax = tmpx - startX;
 									if ((deltax > 0.2) || (deltax < -0.2))
-									scope.$apply(function() {
+									{
+										bMaj = true;
 										if (deltax > 0) {
 											scope.image.x = scope.image.x + 10;
 										} else {
 											scope.image.x = scope.image.x - 10;
 										}
-									});
+									};
 									var deltay = tmpy - startY;
 									if ((deltay > 0.3) || (deltay < -0.3))
-									scope.$apply(function() {
+									{
+										bMaj = true;
 										if (deltay > 0) {
 											scope.image.y = scope.image.y + 10;
 										} else {
 											scope.image.y = scope.image.y - 10;
 										}
-									});
+									};
+									if (bMaj) {
+										scope.$apply();
+									}
 								}
 								startX = tmpx;
 								startY = tmpy;
 							}
 							function processRotation(event) {
-								var tmpl = event.beta;
+								var tmpl = Math.round(event.beta);
 								if (trackingRotation == 0) {
 									//To initialise startX and startY at start 
 									trackingRotation = 1;
