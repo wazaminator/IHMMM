@@ -32,16 +32,17 @@ io.sockets.on('connection', function (socket) {
 		var namePlayer = objectPlayer.name;
         if (typeof listePlayerClient[namePlayer] != 'undefined') {
 			console.log(namePlayer+' existe déjà');
-			socket.emit('creaJoueurClientKo');  
+			var message = JSON.stringify(listePlayerClient[namePlayer]); 
+			socket.emit('creaJoueurClientKo',message);  
 		} else {
 			console.log('Création d\'un joueur : ' + namePlayer);
 			listePlayerClient[namePlayer]=objectPlayer;
 			console.log(listePlayerClient);
-			if (gameMasterName == '') {
-				socket.emit('creaJoueurClientOkSansMaitre');  
-			} else {
-				socket.emit('creaJoueurClientOkAvecMaitre',gameMasterName);  
-			}
+		}
+		if (gameMasterName == '') {
+			socket.emit('creaJoueurClientOkSansMaitre');  
+		} else {
+			socket.emit('creaJoueurClientOkAvecMaitre',gameMasterName);  
 		}
     });
 	
@@ -88,9 +89,11 @@ io.sockets.on('connection', function (socket) {
 		socket.broadcast.emit('playerDamaged',playerName);  
     }); 
 	
-	socket.on('usePowerByClient', function (userName) {
-        console.log('usePowerByClient par '+userName);
-		socket.broadcast.emit('usePowerByClient',userName);  
+	socket.on('usePowerByClient', function (powerTypeUsed) {
+        console.log('usePowerByClient de type '+typeof powerTypeUsed);
+		var message = ''+powerTypeUsed;
+		socket.broadcast.emit('powerUsedByClient',message);  
+		socket.emit('powerUsedByClient',message);  //a virer
     }); 
 	
 	socket.on('endOfTheGame', function () {

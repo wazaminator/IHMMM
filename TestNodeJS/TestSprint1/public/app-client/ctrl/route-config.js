@@ -22,10 +22,22 @@ ihmApp
 										controller : 'PadScaleExactCtrl'
 									})
 							.when(
-									'/phone-translate',
+									'/move-clavier',
 									{
-										templateUrl : 'app-client/modalites/phone-translate/phone-translate-view.html',
-										controller : 'PhoneTranslateCtrl'
+										templateUrl : 'app-client/modalites/move-clavier/move-clavier-view.html',
+										controller : 'MoveClavierCtrl'
+									})
+							.when(
+									'/phone-touch-pinch',
+									{
+										templateUrl : 'app-client/modalites/phone-touch-pinch/phone-touch-pinch-view.html',
+										controller : 'PhoneTouchPinchCtrl'
+									})
+							.when(
+									'/phone-touch-rotate',
+									{
+										templateUrl : 'app-client/modalites/phone-touch-rotate/phone-touch-rotate-view.html',
+										controller : 'PhoneTouchRotateCtrl'
 									})
 							.otherwise({
 								redirectTo : '/'

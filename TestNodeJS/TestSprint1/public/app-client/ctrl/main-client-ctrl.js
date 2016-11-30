@@ -1,8 +1,9 @@
 ihmApp.controller('mainClientCtrl', [
 		'$scope',
-		'$window',
-		function($scope, $window) {
+		'$window','$interval','$timeout',
+		function($scope,$window,$interval,$timeout) {
 			var socket = io.connect();
+			$scope.bgCol = '#FFFFFF';
 			$scope.vais = {
 				name : '',
 				x : 400,
@@ -26,6 +27,22 @@ ihmApp.controller('mainClientCtrl', [
 				'name' : 'kk'
 			};
 			$scope.debug = "None";
+			$scope.clock = 0;
+			$scope.powerType = 0;
+			$scope.inversion = 1;
+			$scope.lengthmax = false;
+			
+			var clockManager = function(){
+				if ($scope.clock > 0) {
+					$scope.clock -= 1;
+				} else {
+					$scope.powerType = 0;
+					$scope.inversion = 1;
+					$scope.lengthmax = false;
+				}
+			};
+			
+			$interval(clockManager, 1000);
 
 			$scope.creaJoueurClient = function() {
 				var message = angular.toJson($scope.vais);
@@ -49,12 +66,12 @@ ihmApp.controller('mainClientCtrl', [
 			}
 
 			$scope.usePower = function() {
-				socket.emit('usePowerByClient', $scope.vais.name);
-				$scope.vais.p -= 1;
+				var typePouvoir = $scope.vais.p.pop();
+				socket.emit('usePowerByClient', typePouvoir);
 			}
 
 			$scope.hasPower = function() {
-				return ($scope.vais.p > 0);
+				return ($scope.vais.p.length > 0);
 			}
 
 			$scope.$watch('vais', function() {
@@ -94,9 +111,10 @@ ihmApp.controller('mainClientCtrl', [
 				}
 			}
 
-			socket.on('creaJoueurClientKo', function() {
-				$window.alert("Le nom de joueur existe déjà.");
-				$scope.vais.name = '';
+			socket.on('creaJoueurClientKo', function(message) {
+				var vaisSvg = angular.fromJson(message);
+				$window.alert("Le nom de joueur existe déjà, il est restauré.");
+				$scope.vais = vaisSvg;
 				$scope.$apply();
 			});
 
@@ -109,7 +127,11 @@ ihmApp.controller('mainClientCtrl', [
 			socket.on('creaJoueurClientOkAvecMaitre', function(masterName) {
 				$scope.debug = "creaJoueurClient Ok Avec Maitre";
 				$scope.maitreJeu.name = masterName;
-				$scope.visuMode = 'inscription-partie';
+				if ($scope.maitreJeu.name != $scope.vais.name) {
+					$scope.visuMode = 'inscription-partie';
+				} else {
+					$scope.visuMode = 'declenche-partie';
+				}
 				$scope.$apply();
 			});
 
@@ -159,7 +181,7 @@ ihmApp.controller('mainClientCtrl', [
 					$scope.debug = "powerWonByClient reçu confirmé "
 							+ powerWon.name + " of type " + powerWon.type;
 					if (powerWon.type == 3) { // Point of life awarded
-						$scope.vais.pt += 50;
+						$scope.vais.pt += 20000;
 					} else {
 						$scope.vais.p.push(powerWon.type);
 					}
@@ -181,11 +203,31 @@ ihmApp.controller('mainClientCtrl', [
 
 			socket.on('playerDamaged', function(playerName) {
 				if (playerName == $scope.vais.name) {
+					if (navigator.vibrate) {
+						navigator.vibrate(1000);
+					}
+					$scope.bgCol = '#FF0000';
+					$timeout(function() {
+						$scope.bgCol = '#FFFFFF';
+					}, 200);
 					$scope.debug = "playerDamaged ! ";
 					var audio = new Audio('app-client/sounds/explo.mp3');
 					//audio.play();
 					$scope.$apply();
 				}
+			});
+			
+			socket.on('powerUsedByClient', function(powerTypeUsed) {
+				$scope.clock = 6;
+				$scope.powerType = powerTypeUsed;
+				if (powerTypeUsed == '1') {
+					$scope.inversion = -1;
+				}
+				if (powerTypeUsed == '2') {
+					$scope.lengthmax = true;
+					$scope.vais.l = $scope.limits.lMax;
+				}
+				$scope.$apply();
 			});
 
 			socket.on('message',
