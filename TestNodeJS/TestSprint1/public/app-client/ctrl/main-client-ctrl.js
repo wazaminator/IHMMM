@@ -1,8 +1,9 @@
 ihmApp.controller('mainClientCtrl', [
 		'$scope',
-		'$window','$interval',
-		function($scope,$window,$interval) {
+		'$window','$interval','$timeout',
+		function($scope,$window,$interval,$timeout) {
 			var socket = io.connect();
+			$scope.bgCol = '#FFFFFF';
 			$scope.vais = {
 				name : '',
 				x : 400,
@@ -202,6 +203,13 @@ ihmApp.controller('mainClientCtrl', [
 
 			socket.on('playerDamaged', function(playerName) {
 				if (playerName == $scope.vais.name) {
+					if (navigator.vibrate) {
+						navigator.vibrate(1000);
+					}
+					$scope.bgCol = '#FF0000';
+					$timeout(function() {
+						$scope.bgCol = '#FFFFFF';
+					}, 200);
 					$scope.debug = "playerDamaged ! ";
 					var audio = new Audio('app-client/sounds/explo.mp3');
 					//audio.play();

@@ -27,12 +27,13 @@
 <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="../bower_components/tinycolor/dist/tinycolor-min.js"></script>
 <script src="../bower_components/angular-color-picker/dist/angularjs-color-picker.min.js"></script>
+<script src="../bower_components/angular-swipe/dist/angular-swipe.min.js"></script>
 <!-- endbower -->
 <script src="../socket.io/socket.io.js"></script>
 <title>CasseBrique</title>
 
 <script>
-	var ihmApp = angular.module('ihmProjet1', ['myPadScaleExactModule','myPadScrollModule','myPhoneTranslateModule','myMoveClavierModule','ngRoute','color.picker']);
+	var ihmApp = angular.module('ihmProjet1', ['myPadScaleExactModule','myPadScrollModule','myMoveClavierModule','myPhoneTouchPinchModule','myPhoneTouchRotateModule','ngRoute','color.picker','swipe']);
 </script>
 <script>
 	document.write('<base href="' + document.location + '" />');
@@ -41,33 +42,38 @@
 	src="app-client/modalites/pad-scale-exact/mydir/my-pad-scale-exact.js"></script>
 <script src="app-client/modalites/pad-scroll/mydir/my-pad-scroll.js"></script>
 <script
-	src="app-client/modalites/phone-translate/mydir/my-phone-translate.js"></script>
+	src="app-client/modalites/phone-touch-pinch/mydir/my-phone-touch-pinch.js"></script>
+<script
+	src="app-client/modalites/phone-touch-rotate/mydir/my-phone-touch-rotate.js"></script>
 <script
 	src="app-client/modalites/move-clavier/mydir/my-move-clavier.js"></script>
 <script
 	src="app-client/modalites/pad-scale-exact/ctrl/pad-scale-exact-ctrl.js"></script>
 <script src="app-client/modalites/pad-scroll/ctrl/pad-scroll-ctrl.js"></script>
 <script
-	src="app-client/modalites/phone-translate/ctrl/phone-translate-ctrl.js"></script>
-<script
 	src="app-client/modalites/move-clavier/ctrl/move-clavier-ctrl.js"></script>
+<script
+	src="app-client/modalites/phone-touch-pinch/ctrl/phone-touch-pinch-ctrl.js"></script>
+<script
+	src="app-client/modalites/phone-touch-rotate/ctrl/phone-touch-rotate-ctrl.js"></script>
 <script src="app-client/ctrl/main-client-ctrl.js"></script>
 <script src="app-client/ctrl/route-config.js"></script>
 <script src="app-client/ctrl/color-picker.js"></script>
 </head>
-<body ng-controller="mainClientCtrl">
+<body ng-controller="mainClientCtrl" ng-style="{'background-color':bgCol}">
 	<h1>Projet IHM</h1>
-	<h4>inversion:{{inversion}}</h4>
+	<!--h4>inversion:{{inversion}}</h4>
 	<h4>lengthmax:{{lengthmax}}</h4>
 	<h4>clock:{{clock}}</h4>
 	<h4>powerType:{{powerType}}</h4>
 	<h4>debug:{{debug}}</h4>
-	<h4>visuMode:{{visuMode}}</h4>
+	<h4>visuMode:{{visuMode}}</h4-->
 	<ul>
-		<li><a href="#/pad-scroll">Pad scroll</a></li>
-		<li><a href="#/pad-scale-exact">Pad échelle exacte</a></li>
-		<li><a href="#/phone-translate">Avec déplacement du téléphone</a></li>
+		<li><a href="#/pad-scroll">Pad scroll à la souris / Redondance clavier</a></li>
+		<li><a href="#/pad-scale-exact">Pad échelle exacte à la souris / Redondance clavier</a></li>
 		<li><a href="#/move-clavier">Avec déplacement clavier uniquement</a></li>
+		<li><a href="#/phone-touch-pinch">Avec téléphone en tactile et pinch pour redimensionner / double touch pour utiliser pouvoir</a></li>
+		<li><a href="#/phone-touch-rotate">Avec téléphone en tactile et rotation pour redimensionner / double touch pour utiliser pouvoir</a></li>
 	</ul>
 	<br>
 	<div ng-include src="'app-client/partials/accueil-page.html'"></div>
@@ -79,7 +85,7 @@
 			ng-click="usePower()">Utilisation du pouvoir</button>
 	</p>
 	<br>
-	<p class="form-group">
+	<!--p class="form-group">
 		<label>Position x : {{vais.x}}</label>
 	</p>
 	<p class="form-group">
@@ -87,6 +93,6 @@
 	</p>
 	<p class="form-group">
 		<label>Size l : {{vais.l}}</label>
-	</p>
+	</p-->
 </body>
 </html>
